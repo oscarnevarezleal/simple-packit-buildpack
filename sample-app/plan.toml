@@ -1,0 +1,5 @@
+[[requires]]
+name = "laraboot-buildpacks/foundation"
+
+[requires.metadata]
+launch = false
