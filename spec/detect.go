@@ -2,16 +2,14 @@ package spec
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/cloudfoundry/packit"
 	"os"
-	"fmt"
 	"path/filepath"
 )
 
 func Detect() packit.DetectFunc {
 	return func(context packit.DetectContext) (packit.DetectResult, error) {
-
-		fmt.Printf("Detecting -> %s", "spec.json ?")
 
 		// The DetectContext includes a WorkingDir field that specifies the
 		// location of the application source code. This field can be combined with
@@ -51,9 +49,12 @@ func Detect() packit.DetectFunc {
 
 		return packit.DetectResult{
 			Plan: packit.BuildPlan{
+				Provides: []packit.BuildPlanProvision{
+					{Name: "simple-packit-buildpack"},
+				},
 				Requires: []packit.BuildPlanRequirement{
 					{
-						Name:    "php-dist",
+						Name:    "simple-packit-buildpack",
 						Version: config.PhpConfig.Version,
 						Metadata: map[string]string{
 							"version-source": "spec.json",
